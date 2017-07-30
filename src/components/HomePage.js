@@ -21,9 +21,9 @@ return <div className="list-books">
         <h1>MyReads</h1>
     </div>
     <div className="list-books-content">
-        <BookShelf shelf="Currently Reading" books={this.state.books} />,
-        <BookShelf shelf="Want to Read" books={this.state.books} />,
-        <BookShelf shelf="Read" books={this.state.books} />
+        <BookShelf shelf="Currently Reading" books={ this.state.books.filter(book => book.shelf === 'currentlyReading')} />,
+        <BookShelf shelf="Want to Read" books={this.state.books.filter(book => book.shelf === 'wantToRead')} />,
+        <BookShelf shelf="Read" books={this.state.books.filter(book => book.shelf === 'read')} />
     </div>
 
 
