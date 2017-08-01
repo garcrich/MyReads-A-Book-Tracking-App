@@ -9,26 +9,25 @@ class HomePage extends Component {
     }
 
     updateShelf = (book, shelf) => {
-        console.log(book, shelf);
-        this.setState((book) => {
-            BooksAPI.update(book, shelf).then(this.setState(oldState => {
-                return {
-                    books: oldState.books.map(b => {
-                        if (b.id === book.id) {
-                            b.shelf = shelf;
-                        }
-                        return b;
-                    })
-                };
+        console.log(book, shelf)
+        BooksAPI.update(book, shelf).then(
+            this.setState(oldState => ({
+                books: oldState.books.map(b => {
+                    if (b.id === book.id) {
+                        b.shelf = shelf;
+                    }
+                    return b;
+                })
             })
-            )
-        })
-    }
+        )
+    )}
+
 
     //added array of books to the state
     componentDidMount() {
         BooksAPI.getAll().then(books => {
             this.setState({ books })
+            console.log(books)
         })
     }
 
