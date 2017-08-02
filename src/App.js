@@ -7,8 +7,7 @@ import './App.css'
 class App extends React.Component {
 
   render() {
-  //console out books can't figure out how to get props inside
-
+    
     return (
       <div className="app">
         <Route path="/search" render={() => (
