@@ -9,7 +9,7 @@ class HomePage extends Component {
     }
 
     updateShelf = (book, shelf) => {
-        console.log(book, shelf)
+        //console.log(book, shelf)
         BooksAPI.update(book, shelf).then(
             this.setState(oldState => ({
                 books: oldState.books.map(b => {
@@ -19,15 +19,16 @@ class HomePage extends Component {
                     return b;
                 })
             })
+            )
         )
-    )}
+    }
 
 
     //added array of books to the state
     componentDidMount() {
         BooksAPI.getAll().then(books => {
             this.setState({ books })
-            console.log(books)
+            //console.log(books)
         })
     }
 
@@ -39,9 +40,9 @@ class HomePage extends Component {
                 <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-        <BookShelf updateShelf={this.updateShelf} shelf="Currently Reading" books={this.state.books.filter(book => book.shelf === 'currentlyReading')} />,
-        <BookShelf updateShelf={this.updateShelf} shelf="Want to Read" books={this.state.books.filter(book => book.shelf === 'wantToRead')} />,
-        <BookShelf updateShelf={this.updateShelf} shelf="Read" books={this.state.books.filter(book => book.shelf === 'read')} />
+                <BookShelf updateShelf={this.updateShelf} shelf="Currently Reading" books={this.state.books.filter(book => book.shelf === 'currentlyReading')} />,
+                <BookShelf updateShelf={this.updateShelf} shelf="Want to Read" books={this.state.books.filter(book => book.shelf === 'wantToRead')} />,
+                <BookShelf updateShelf={this.updateShelf} shelf="Read" books={this.state.books.filter(book => book.shelf === 'read')} />
             </div>
 
 
