@@ -1,16 +1,33 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { debounce } from 'javascript-debounce'
 import * as BooksAPI from '../BooksAPI'
 import BookShelf from './BookShelf'
 
 class SearchBook extends Component {
-    state = { books: []  }
+    state = { books: [] }
 
+    returnedResults = () =>
+    {setTimeout(() => {
+        this.searchQuery();
+    }, 1000);}
+    
     searchQuery = (event) => {
-        BooksAPI.search(event.target.value, 20).then(books => {
-            this.setState({ books  })
-            console.log(this.state.books);
-        })
+        if (event.target.value !== '') {
+        setTimeout(
+            BooksAPI.search(event.target.value,5).then(
+                books => {
+                    this.setState({ books })
+                    console.log(this.state.books);
+                }).catch(this.setState({
+                    books: undefined
+                }))
+        )
+        } else {
+            this.setState({
+                books: undefined
+            })
+        }
     }
 
 
@@ -30,6 +47,7 @@ class SearchBook extends Component {
     }
 
 
+
     render() {
 
         return <div className="search-books">
@@ -47,7 +65,7 @@ class SearchBook extends Component {
                     <input
                     type="text"
                     value={this.state.searchedBooks} 
-                    onChange={this.searchQuery}
+                    onChange={this.returnedResults}
                     placeholder="Search by title or author"
                     />
 
@@ -55,9 +73,9 @@ class SearchBook extends Component {
             </div>
             <div className="search-books-results">
 
-                {this.state.book =! undefined && 
-                    <BookShelf updateShelf={this.updateShelf} books={this.state.books}/>
-                } 
+                 {this.state.books !== undefined && (
+                 <BookShelf shelf="Search Results" updateShelf={this.updateShelf} books={this.state.books}/>
+                 )}  
             </div>
         </div>
     };
