@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from '../BooksAPI'
 import BookShelf from './BookShelf'
+//import SearchBook from './search'
 
 class HomePage extends Component {
     state = {
         books: [],
     }
+
 
     updateShelf = (book, shelf) => {
         //console.log(book, shelf)
@@ -52,8 +54,6 @@ class HomePage extends Component {
                     Add a book
                 </Link>
             </div>
-
-
         </div>
     }
 }

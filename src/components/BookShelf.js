@@ -9,12 +9,12 @@ class BookShelf extends Component {
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     
-                    {this.props.books !== undefined && (
-                        this.props.books.map((book) => 
-                        <li key={book.id}>
+                    {Array.isArray(this.props.books) && (
+                        this.props.books.map((book, index) => 
+                        <li key={index}>
                             <div className="book">
                                 <div className="book-top">
-                                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+                                    <div className="book-cover" style={{ width: 128, height: 170, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                     <div className="book-shelf-changer">
                                         <select onChange={(event) => this.props.updateShelf(book, event.target.value)}> 
                                             <option value={book.self} >Move to...</option>

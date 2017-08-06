@@ -9,10 +9,10 @@ class SearchBook extends Component {
 
     searchQuery = (event) => {
         if (event.target.value !== '') {
-            BooksAPI.search(event.target.value,5).then(
+            BooksAPI.search(event.target.value).then(
                 books => {
                     this.setState({ books })
-                    console.log(this.state.books);
+    
                 }).catch(this.setState({
                     books: undefined
                 }))
@@ -56,7 +56,7 @@ class SearchBook extends Component {
                 <div className="search-books-input-wrapper">
                     <DebounceInput
                     debounceTimeout={325}
-                    element = "input"
+                    element="input"
                     type="text"
                     value={this.state.searchedBooks.string} 
                     onChange={this.searchQuery}
@@ -68,7 +68,7 @@ class SearchBook extends Component {
             <div className="search-books-results">
 
                  {this.state.books !== undefined && (
-                 <BookShelf shelf="Search Results" updateShelf={this.updateShelf} books={this.state.books}/>
+                 <BookShelf updateShelf={this.updateShelf} shelf="Search Results" books={this.state.books}/>
                  )}  
             </div>
         </div>
