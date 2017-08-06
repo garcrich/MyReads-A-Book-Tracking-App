@@ -25,7 +25,7 @@ class SearchBook extends Component {
 
 
     updateShelf = (book, shelf) => {
-        console.log(book, shelf)
+        //console.log(book, shelf)
         BooksAPI.update(book, shelf).then(
             this.setState(oldState => ({
                 books: oldState.books.map(b => {
