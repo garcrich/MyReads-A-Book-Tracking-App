@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { debounce } from 'javascript-debounce'
+import DebounceInput from 'react-debounce-input'
 import * as BooksAPI from '../BooksAPI'
 import BookShelf from './BookShelf'
 
 class SearchBook extends Component {
-    state = { books: [] }
+    state = { searchedBooks: [] }
 
-    returnedResults = () =>
-    {setTimeout(() => {
-        this.searchQuery();
-    }, 1000);}
-    
     searchQuery = (event) => {
         if (event.target.value !== '') {
-        setTimeout(
             BooksAPI.search(event.target.value,5).then(
                 books => {
                     this.setState({ books })
@@ -22,7 +16,6 @@ class SearchBook extends Component {
                 }).catch(this.setState({
                     books: undefined
                 }))
-        )
         } else {
             this.setState({
                 books: undefined
@@ -53,7 +46,6 @@ class SearchBook extends Component {
         return <div className="search-books">
             <div className="search-books-bar">
 
-
                 <Link
                     className="close-search"
                     to="/">
@@ -62,10 +54,12 @@ class SearchBook extends Component {
 
 
                 <div className="search-books-input-wrapper">
-                    <input
+                    <DebounceInput
+                    debounceTimeout={325}
+                    element = "input"
                     type="text"
-                    value={this.state.searchedBooks} 
-                    onChange={this.returnedResults}
+                    value={this.state.searchedBooks.string} 
+                    onChange={this.searchQuery}
                     placeholder="Search by title or author"
                     />
 
