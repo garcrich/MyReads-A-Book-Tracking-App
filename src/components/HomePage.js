@@ -6,7 +6,7 @@ import BookShelf from './BookShelf'
 
 class HomePage extends Component {
     state = {
-      books: this.props.books.map((book) => book)
+        books: [],
     }
 
 
@@ -21,18 +21,18 @@ class HomePage extends Component {
                     return b;
                 })
             })
+            )
         )
-    )
-}
+    }
 
 
-//added array of books to the state
- componentDidMount() {
-        console.log(this.books);
-//     BooksAPI.getAll().then(books => {
-//         this.setState({ books })
-//         })
-     }
+    //added array of books to the state
+    componentDidMount() {
+        BooksAPI.getAll().then(books => {
+            this.setState({ books })
+            //console.log(books)
+        })
+    }
 
 
 
