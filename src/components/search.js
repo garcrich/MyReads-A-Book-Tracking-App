@@ -1,50 +1,35 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import DebounceInput from 'react-debounce-input'
-//import HomePage from './HomePage'
 import * as BooksAPI from '../BooksAPI'
 import BookShelf from './BookShelf'
 
 class SearchBook extends Component {
-    state = { searchedBooks: [],
-              homepageBooks: [this.props.books] }
+    state = { searchedBooks: [] }
 
     searchQuery = (event) => {
         if (event.target.value !== '') {
             BooksAPI.search(event.target.value).then(
-                books => {
-                    console.log(this.state.homepageBooks)
-                    this.setState({ books })
+                returnedBooks => {
+                    this.setState({ returnedBooks })
+    
                 }).catch(this.setState({
-                    books: undefined
+                    returnedBooks: undefined
                 }))
         } else {
             this.setState({
-                books: undefined
+                returnedBooks: undefined
             })
         }
     }
-
-
-    updateShelf = (book, shelf) => {
-        console.log(book, shelf)
-        BooksAPI.update(book, shelf).then(
-            this.setState(oldState => ({
-                books: oldState.books.map(b => {
-                    if (b.id === book.id) {
-                        b.shelf = shelf;
-                    }
-                    return b;
-                })
-            })
-        )
-    )
-}
-
-render() {
     
-    return <div className="search-books">
+    
+    
+    render() {
+
+        return <div className="search-books">
             <div className="search-books-bar">
+
                 <Link
                     className="close-search"
                     to="/">
@@ -66,8 +51,8 @@ render() {
             </div>
             <div className="search-books-results">
 
-                 {this.state.books !== undefined && (
-                 <BookShelf updateShelf={this.updateShelf} shelf="Search Results" books={this.state.books}/>
+                 {this.state.returnedBooks !== undefined && (
+                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" books={this.state.returnedBooks}/>
                  )}  
             </div>
         </div>
