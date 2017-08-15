@@ -8,37 +8,32 @@ class SearchBook extends Component {
     state = { 
         searchedBooks: [],
         returnedBooks: [],
-        matchingBooks: []
-    }
-
-    
-    componentWillMount() {
-        BooksAPI.getAll()
     }
 
     searchQuery = (event) => {
-        if (event.target.value !== '') {
-            BooksAPI.search(event.target.value).then(
-                returnedBooks => {
-                    this.setState({ returnedBooks })
-                    //const currentShelf = this.props.books.map(shelvedBook => shelvedBook.id)
-                    //const returnedShelf = returnedBooks.map(shelvedBook =>  shelvedBook.id)
-                    returnedBooks.map(shelvedBook => this.props.books.map(currentBook => {
-                        if(shelvedBook.id === currentBook.id){
-                            shelvedBook.shelf = currentBook.shelf
-                        }
-                        return this.setState({matchingBooks: shelvedBook})
-                        
-                    }))
-                }).catch(this.setState({
-                    returnedBooks: undefined
-                }))
-        } else {
-            this.setState({
-                returnedBooks: undefined
+        const query = event.target.value
+        if (query !== '') { 
+          BooksAPI.search(query).then(searchResults => {
+            if (!searchResults || searchResults.error) {
+              this.setState({ returnedBooks: [] })
+              return
+            }
+      
+            // sync books by mapping over searchResults, and
+            // iterating over this.props.books      
+            const adjustedBooks = searchResults.map(searchResult => {
+              this.props.books.forEach(book => {
+                if (book.id === searchResult.id) searchResult.shelf = book.shelf
+              })
+              return searchResult
             })
+      
+            // finally, setState
+            this.setState({ returnedBooks: adjustedBooks })
+      
+          })
         }
-    } 
+      }
     
     
     render() {
@@ -67,7 +62,7 @@ class SearchBook extends Component {
             </div>
             <div className="search-books-results">
 
-                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" matchingBooks={this.state.matchingBooks.id} matchingShelf={this.state.matchingBooks.shelf} books={this.state.returnedBooks}/>
+                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" matchingBooks={this.state.returnedBooks.id} matchingShelf={this.state.returnedBooks.shelf} books={this.state.returnedBooks}/>
 
             </div>
         </div>
