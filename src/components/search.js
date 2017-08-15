@@ -7,7 +7,8 @@ import BookShelf from './BookShelf'
 class SearchBook extends Component {
     state = { 
         searchedBooks: [],
-        currentShelf: this.props.books,
+        returnedBooks: [],
+        matchingBooks: []
     }
 
     
@@ -21,17 +22,14 @@ class SearchBook extends Component {
                 returnedBooks => {
                     this.setState({ returnedBooks })
                     //const currentShelf = this.props.books.map(shelvedBook => shelvedBook.id)
-                    const returnedShelf = returnedBooks.map(shelvedBook =>  shelvedBook.id)
-
-                    const shelfMatch = 
+                    //const returnedShelf = returnedBooks.map(shelvedBook =>  shelvedBook.id)
                     returnedBooks.map(shelvedBook => this.props.books.map(currentBook => {
                         if(shelvedBook.id === currentBook.id){
-                            shelvedBook.shelf = currentBook.shelf 
+                            shelvedBook.shelf = currentBook.shelf
                         }
-                        return shelvedBook
+                        return this.setState({matchingBooks: shelvedBook})
+                        
                     }))
-                    console.log(returnedShelf)
-                    console.log(shelfMatch)
                 }).catch(this.setState({
                     returnedBooks: undefined
                 }))
@@ -44,6 +42,7 @@ class SearchBook extends Component {
     
     
     render() {
+        //console.log(this.state.returnedBooks)
         return <div className="search-books">
             <div className="search-books-bar">
 
@@ -68,7 +67,7 @@ class SearchBook extends Component {
             </div>
             <div className="search-books-results">
 
-                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" searchedBooks={this.state.returnedBooks} books={this.state.returnedBooks}/>
+                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" matchingBooks={this.state.matchingBooks.id} matchingShelf={this.state.matchingBooks.shelf} books={this.state.returnedBooks}/>
 
             </div>
         </div>
