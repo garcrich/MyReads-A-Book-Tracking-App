@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 //import HomePage from './HomePage';
 
 class BookShelf extends Component {
-
     render() {
+       
         return <div className="bookshelf">
             <h2 className="bookshelf-title">{this.props.shelf}</h2>
             <div className="bookshelf-books">
@@ -17,7 +17,7 @@ class BookShelf extends Component {
                                     <div className="book-cover" style={{ width: 128, height: 170, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                                     <div className="book-shelf-changer">
                                         <select onChange={(event) => this.props.updateShelf(book, event.target.value)}> 
-                                            <option value={book.shelf} >Move to...</option>
+                                            <option style={{color: "green", fontWeight: "bold"}} value={book.shelf} >Move to...</option>
                                             <option value="currentlyReading">Currently Reading</option>
                                             <option value="wantToRead">Want to Read</option>
                                             <option value="read">Read</option>
