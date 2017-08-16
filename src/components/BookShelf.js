@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 
 class BookShelf extends Component {
     render() {
-        console.log(this.props.matchingBooks)
         return <div className="bookshelf">
             <h2 className="bookshelf-title">{this.props.shelf}</h2>
             <div className="bookshelf-books">
@@ -25,7 +24,7 @@ class BookShelf extends Component {
                                     </div>
                                 </div>
                                 <div className="book-title">{book.title}</div>
-                                <div className="book-authors">{Array.isArray(book.authors) ? book.authors.join(', '): book.authors}</div>
+                                <div className="book-authors">{Array.isArray(book.authors) ? book.authors.join(', '): ''}</div>
                             </div>
                         </li>
                     ))}

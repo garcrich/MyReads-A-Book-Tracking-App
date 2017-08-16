@@ -7,7 +7,7 @@ import BookShelf from './BookShelf'
 class SearchBook extends Component {
     state = { 
         searchedBooks: [],
-        returnedBooks: [],
+        returnedBooks: []
     }
 
     searchQuery = (event) => {
@@ -62,7 +62,7 @@ class SearchBook extends Component {
             </div>
             <div className="search-books-results">
 
-                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" matchingBooks={this.state.returnedBooks.id} matchingShelf={this.state.returnedBooks.shelf} books={this.state.returnedBooks}/>
+                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" books={this.props.returnedBooks}/>
 
             </div>
         </div>
