@@ -62,7 +62,7 @@ class SearchBook extends Component {
             </div>
             <div className="search-books-results">
 
-                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" books={this.props.returnedBooks}/>
+                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" books={this.state.returnedBooks}/>
 
             </div>
         </div>
