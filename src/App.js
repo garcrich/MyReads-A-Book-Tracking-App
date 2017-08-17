@@ -11,13 +11,9 @@ class App extends React.Component {
     }
 
     //added array of books to the state
-    componentWillMount() {
+    componentDidMount() {
         BooksAPI.getAll().then(myReads => {
-            if(window.location.href !== "http://localhost:3000/search") {
-                this.setState({ myReads })
-            } else {
-                this.setState({myReads: []})
-            }
+            this.setState({ myReads })
         })
     }
 
@@ -26,26 +22,27 @@ class App extends React.Component {
         if (query !== '') { 
           BooksAPI.search(query).then(searchResults => {
             if (!searchResults || searchResults.error) {
-              this.setState({ returnedBooks: [] })
+              this.setState({ myReads: [] })
               return
             }
             // sync books by mapping over searchResults, and
             // iterating over this.props.books      
             const adjustedBooks = searchResults.map(searchResult => {
-              this.props.books.forEach(book => {
+                this.state.myReads.forEach(book => {
                 if (book.id === searchResult.id) searchResult.shelf = book.shelf
               })
               return searchResult
             })
       
             // finally, setState
-            this.setState({ returnedBooks: adjustedBooks })
+            this.setState({ myReads: adjustedBooks })
       
           })
         }
       }
 
     updateShelf = (book, shelf) => {
+        
         if (shelf === 'none') {
             this.setState(prevState => ({
                 myReads: prevState.myReads.filter(b => b.id !== book.id)

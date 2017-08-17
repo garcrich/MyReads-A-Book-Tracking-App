@@ -5,11 +5,7 @@ import * as BooksAPI from '../BooksAPI'
 import BookShelf from './BookShelf'
 
 class SearchBook extends Component {
-    state = { 
-        searchedBooks: [],
-        returnedBooks: []
-    }
-    
+   
     
     render() {
         //console.log(this.state.returnedBooks)
