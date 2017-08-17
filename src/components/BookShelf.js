@@ -8,8 +8,8 @@ class BookShelf extends Component {
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     {Array.isArray(this.props.books) && (
-                        this.props.books.map((book) =>
-                        <li key={book.id}>
+                        this.props.books.map((book, index) =>
+                        <li key={index}>
                             <div className="book">
                                 <div className="book-top">
                                     <div className="book-cover" style={{ width: 128, height: 170, backgroundImage: book.imageLinks ? (`url(${book.imageLinks.thumbnail})`) : (`url(https://dummyimage.com/128x170/4f4f4f/ffffff.jpg&text=No+Book+Art)`) }}></div>
