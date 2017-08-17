@@ -9,31 +9,6 @@ class SearchBook extends Component {
         searchedBooks: [],
         returnedBooks: []
     }
-
-    searchQuery = (event) => {
-        const query = event.target.value
-        if (query !== '') { 
-          BooksAPI.search(query).then(searchResults => {
-            if (!searchResults || searchResults.error) {
-              this.setState({ returnedBooks: [] })
-              return
-            }
-      
-            // sync books by mapping over searchResults, and
-            // iterating over this.props.books      
-            const adjustedBooks = searchResults.map(searchResult => {
-              this.props.books.forEach(book => {
-                if (book.id === searchResult.id) searchResult.shelf = book.shelf
-              })
-              return searchResult
-            })
-      
-            // finally, setState
-            this.setState({ returnedBooks: adjustedBooks })
-      
-          })
-        }
-      }
     
     
     render() {
@@ -53,8 +28,8 @@ class SearchBook extends Component {
                     debounceTimeout={325}
                     element="input"
                     type="text"
-                    value={this.state.searchedBooks.string} 
-                    onChange={this.searchQuery}
+                    value={this.props.searchedBooks.string} 
+                    onChange={this.props.searchQuery}
                     placeholder="Search by title or author"
                     />
 
@@ -62,7 +37,7 @@ class SearchBook extends Component {
             </div>
             <div className="search-books-results">
 
-                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" books={this.state.returnedBooks}/>
+                 <BookShelf updateShelf={this.props.updateShelf} shelf="Search Results" books={this.props.books}/>
 
             </div>
         </div>
